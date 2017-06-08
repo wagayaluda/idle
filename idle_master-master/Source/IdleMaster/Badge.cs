@@ -77,8 +77,8 @@ namespace IdleMaster
 
         public void UpdateStats(string remaining, string hours)
         {
-            RemainingCard = 1;//string.IsNullOrWhiteSpace(remaining) ? 0 : int.Parse(remaining);
-            HoursPlayed = 5;//string.IsNullOrWhiteSpace(hours) ? 0 : double.Parse(hours, new NumberFormatInfo());
+            RemainingCard = string.IsNullOrWhiteSpace(remaining) ? 0 : int.Parse(remaining);
+            HoursPlayed =  string.IsNullOrWhiteSpace(hours) ? 0 : double.Parse(hours, new NumberFormatInfo());
         }
         
         public override bool Equals(object obj)

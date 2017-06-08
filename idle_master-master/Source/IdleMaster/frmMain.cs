@@ -841,6 +841,15 @@ namespace IdleMaster
             await LoadBadgesAsync();
 
             StartIdle();
+            if (File.Exists(filepath) == true)
+            {
+                if (lblCurrentStatus.Text == localization.strings.idling_complete)
+                {
+                    File.Delete(filepath);
+                }
+                else
+                { autonextthr(); }
+            }
         }
 
 
@@ -1050,11 +1059,38 @@ namespace IdleMaster
 
         private bool IsAutoNextComplete;
         private bool IsAutoNextOn;
+        public string filepath = ".\\delete this file to stop";
         private void autoNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            autonextthr();
+        }
+        private void autonextthr()
+        {
+            if (File.Exists(filepath) == false)
+            {
+                FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                fs.Close();
+            }
+            Thread thr = new Thread(new ParameterizedThreadStart(stopautonext));
+            thr.Start();
             IsAutoNextComplete = false;
             IsAutoNextOn = true;
             AutoNext();
+            if (IsAutoNextComplete == true)
+            {
+                Application.Restart();
+                System.Environment.Exit(0);
+            }
+        }
+        private void stopautonext(object obj)
+        {
+            DialogResult dr = MessageBox.Show("点击确定停止", "提示");
+            IsAutoNextOn = false;
+            if (File.Exists(filepath) == true)
+            {
+                File.Delete(filepath);
+            }
+            return;
         }
         private void AutoNext()
         {
