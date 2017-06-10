@@ -17,6 +17,7 @@ using Steamworks;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 using System.Globalization;
 using System.Security.Principal;
+using System.Runtime.InteropServices;
 
 namespace IdleMaster
 {
@@ -25,6 +26,8 @@ namespace IdleMaster
         private Statistics statistics = new Statistics();
         public List<Badge> AllBadges { get; set; }
 
+        [DllImport("kernel32")]
+        private static extern int GetPrivateProfileString(string section, string key, string defVal, StringBuilder retVal, int size, string filePath);
         public IEnumerable<Badge> CanIdleBadges
         {
             get { return AllBadges.Where(b => b.RemainingCard != 0); }
@@ -35,6 +38,7 @@ namespace IdleMaster
         public int TimeLeft = 900;
         public int RetryCount = 0;
         public int ReloadCount = 0;
+        public int AutoNextTime = 500;
         public int CardsRemaining { get { return CanIdleBadges.Sum(b => b.RemainingCard); } }
         public int GamesRemaining { get { return CanIdleBadges.Count(); } }
         public Badge CurrentBadge;
@@ -65,7 +69,7 @@ namespace IdleMaster
                 }
             }
         }
-
+        
         public void SortBadges(string method)
         {
             lblDrops.Text = localization.strings.sorting_results;
@@ -569,6 +573,22 @@ namespace IdleMaster
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            try
+            {
+                StringBuilder temp = new StringBuilder(500);
+                GetPrivateProfileString("AutoNext", "Time", "500", temp, 500, ".\\Settings.ini");
+                if (temp.ToString() == "")
+                { AutoNextTime = 500; }
+                else
+                {
+                    AutoNextTime = Convert.ToInt32(temp.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("程序发生错误，即将退出！\r\n错误信息：" + ex.Message);
+                System.Environment.Exit(0);
+            }
             // Copy external references to the output directory.  This allows ClickOnce install.
             if (File.Exists(Environment.CurrentDirectory + "\\steam_api.dll") == false)
             {
@@ -1113,7 +1133,7 @@ namespace IdleMaster
                 {
                     StopIdle();
                     AllBadges.RemoveAll(b => Equals(b, CurrentBadge));
-                    Thread.Sleep(500);
+                    Thread.Sleep(AutoNextTime);
                     StartIdle();
                     AutoNext();
                 }
