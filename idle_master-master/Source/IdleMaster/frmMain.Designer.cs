@@ -48,9 +48,10 @@ namespace IdleMaster
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blacklistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseIdlingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resumeIdlingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +87,9 @@ namespace IdleMaster
             this.Hours = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblHoursPlayed = new System.Windows.Forms.Label();
             this.tmrStatistics = new System.Windows.Forms.Timer(this.components);
+            this.tmrAutoNext = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.autonextlabel = new System.Windows.Forms.Label();
             this.mnuTop.SuspendLayout();
             this.ssFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picReadingPage)).BeginInit();
@@ -230,9 +234,11 @@ namespace IdleMaster
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.settingsToolStripMenuItem,
             this.blacklistToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.exitToolStripMenuItem,
-            this.autoNextToolStripMenuItem});
+            this.toolStripSeparator1,
+            this.autoNextToolStripMenuItem,
+            this.ReloadToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "&File";
@@ -241,7 +247,7 @@ namespace IdleMaster
             // 
             this.settingsToolStripMenuItem.Image = global::IdleMaster.Properties.Resources.imgSettings;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
             this.settingsToolStripMenuItem.Text = "&Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -249,29 +255,36 @@ namespace IdleMaster
             // 
             this.blacklistToolStripMenuItem.Image = global::IdleMaster.Properties.Resources.imgBlacklist;
             this.blacklistToolStripMenuItem.Name = "blacklistToolStripMenuItem";
-            this.blacklistToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.blacklistToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
             this.blacklistToolStripMenuItem.Text = "&Blacklist";
             this.blacklistToolStripMenuItem.Click += new System.EventHandler(this.blacklistToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // toolStripSeparator2
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(186, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::IdleMaster.Properties.Resources.imgExit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // autoNextToolStripMenuItem
             // 
             this.autoNextToolStripMenuItem.Name = "autoNextToolStripMenuItem";
-            this.autoNextToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.autoNextToolStripMenuItem.Text = "自动下一个";
+            this.autoNextToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.autoNextToolStripMenuItem.Text = "打开自动下一个";
             this.autoNextToolStripMenuItem.Click += new System.EventHandler(this.autoNextToolStripMenuItem_Click);
+            // 
+            // ReloadToolStripMenuItem
+            // 
+            this.ReloadToolStripMenuItem.Name = "ReloadToolStripMenuItem";
+            this.ReloadToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.ReloadToolStripMenuItem.Text = "重新加载";
+            this.ReloadToolStripMenuItem.Click += new System.EventHandler(this.ReloadToolStripMenuItem_Click);
             // 
             // gameToolStripMenuItem
             // 
@@ -570,12 +583,36 @@ namespace IdleMaster
             this.tmrStatistics.Interval = 60000;
             this.tmrStatistics.Tick += new System.EventHandler(this.tmrStatistics_Tick);
             // 
+            // tmrAutoNext
+            // 
+            this.tmrAutoNext.Interval = 500;
+            this.tmrAutoNext.Tick += new System.EventHandler(this.tmrAutoNext_Tick);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
+            // 
+            // autonextlabel
+            // 
+            this.autonextlabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autonextlabel.AutoSize = true;
+            this.autonextlabel.ForeColor = System.Drawing.Color.Red;
+            this.autonextlabel.Location = new System.Drawing.Point(280, 42);
+            this.autonextlabel.Name = "autonextlabel";
+            this.autonextlabel.Size = new System.Drawing.Size(112, 15);
+            this.autonextlabel.TabIndex = 30;
+            this.autonextlabel.Text = "关闭自动下一个";
+            this.autonextlabel.Visible = false;
+            this.autonextlabel.Click += new System.EventHandler(this.autonextlabel_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(405, 391);
+            this.Controls.Add(this.autonextlabel);
             this.Controls.Add(this.lblHoursPlayed);
             this.Controls.Add(this.GamesState);
             this.Controls.Add(this.lblSignedOnAs);
@@ -643,7 +680,7 @@ namespace IdleMaster
         private MenuStrip mnuTop;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem settingsToolStripMenuItem;
-        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
@@ -678,6 +715,10 @@ namespace IdleMaster
         private Timer tmrStatistics;
         private ToolStripMenuItem statisticsToolStripMenuItem;
         private ToolStripMenuItem autoNextToolStripMenuItem;
+        private ToolStripMenuItem ReloadToolStripMenuItem;
+        private Timer tmrAutoNext;
+        private ToolStripSeparator toolStripSeparator1;
+        private Label autonextlabel;
     }
 }
 

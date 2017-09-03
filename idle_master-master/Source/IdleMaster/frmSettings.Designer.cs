@@ -48,18 +48,14 @@ namespace IdleMaster
             this.btnOK = new System.Windows.Forms.Button();
             this.ttHints = new System.Windows.Forms.ToolTip(this.components);
             this.btnAdvanced = new System.Windows.Forms.Button();
+            this.btnWaga = new System.Windows.Forms.Button();
             this.grpIdlingQuantity = new System.Windows.Forms.GroupBox();
             this.radOneThenMany = new System.Windows.Forms.RadioButton();
             this.radManyThenOne = new System.Windows.Forms.RadioButton();
             this.radOneGameOnly = new System.Windows.Forms.RadioButton();
-            this.changetimegroupBox = new System.Windows.Forms.GroupBox();
-            this.changeautonextime = new System.Windows.Forms.Button();
-            this.timebox = new System.Windows.Forms.TextBox();
-            this.mslabel = new System.Windows.Forms.Label();
             this.grpGeneral.SuspendLayout();
             this.grpPriority.SuspendLayout();
             this.grpIdlingQuantity.SuspendLayout();
-            this.changetimegroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpGeneral
@@ -234,10 +230,10 @@ namespace IdleMaster
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(440, 438);
+            this.btnCancel.Location = new System.Drawing.Point(440, 371);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 27);
+            this.btnCancel.Size = new System.Drawing.Size(100, 32);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -246,10 +242,10 @@ namespace IdleMaster
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(332, 438);
+            this.btnOK.Location = new System.Drawing.Point(332, 371);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(100, 27);
+            this.btnOK.Size = new System.Drawing.Size(100, 32);
             this.btnOK.TabIndex = 3;
             this.btnOK.Text = "&Accept";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -259,14 +255,27 @@ namespace IdleMaster
             // 
             this.btnAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAdvanced.Image = global::IdleMaster.Properties.Resources.imgLock;
-            this.btnAdvanced.Location = new System.Drawing.Point(16, 438);
+            this.btnAdvanced.Location = new System.Drawing.Point(17, 352);
             this.btnAdvanced.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAdvanced.Name = "btnAdvanced";
-            this.btnAdvanced.Size = new System.Drawing.Size(33, 27);
+            this.btnAdvanced.Size = new System.Drawing.Size(55, 55);
             this.btnAdvanced.TabIndex = 4;
             this.ttHints.SetToolTip(this.btnAdvanced, "Display advanced authentication information");
             this.btnAdvanced.UseVisualStyleBackColor = true;
             this.btnAdvanced.Click += new System.EventHandler(this.btnAdvanced_Click);
+            // 
+            // btnWaga
+            // 
+            this.btnWaga.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnWaga.Image = global::IdleMaster.Properties.Resources.neko;
+            this.btnWaga.Location = new System.Drawing.Point(80, 352);
+            this.btnWaga.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnWaga.Name = "btnWaga";
+            this.btnWaga.Size = new System.Drawing.Size(55, 55);
+            this.btnWaga.TabIndex = 6;
+            this.ttHints.SetToolTip(this.btnWaga, "魔改设置");
+            this.btnWaga.UseVisualStyleBackColor = true;
+            this.btnWaga.Click += new System.EventHandler(this.btnWaga_Click);
             // 
             // grpIdlingQuantity
             // 
@@ -323,52 +332,14 @@ namespace IdleMaster
             this.radOneGameOnly.Text = "Idle each game individually";
             this.radOneGameOnly.UseVisualStyleBackColor = true;
             // 
-            // changetimegroupBox
-            // 
-            this.changetimegroupBox.Controls.Add(this.mslabel);
-            this.changetimegroupBox.Controls.Add(this.timebox);
-            this.changetimegroupBox.Controls.Add(this.changeautonextime);
-            this.changetimegroupBox.Location = new System.Drawing.Point(17, 352);
-            this.changetimegroupBox.Name = "changetimegroupBox";
-            this.changetimegroupBox.Size = new System.Drawing.Size(523, 68);
-            this.changetimegroupBox.TabIndex = 7;
-            this.changetimegroupBox.TabStop = false;
-            this.changetimegroupBox.Text = "修改自动切换游戏时间间隔";
-            // 
-            // changeautonextime
-            // 
-            this.changeautonextime.Location = new System.Drawing.Point(119, 24);
-            this.changeautonextime.Name = "changeautonextime";
-            this.changeautonextime.Size = new System.Drawing.Size(100, 27);
-            this.changeautonextime.TabIndex = 0;
-            this.changeautonextime.Text = "确定";
-            this.changeautonextime.UseVisualStyleBackColor = true;
-            this.changeautonextime.Click += new System.EventHandler(this.changeautonextime_Click);
-            // 
-            // timebox
-            // 
-            this.timebox.Location = new System.Drawing.Point(11, 24);
-            this.timebox.Name = "timebox";
-            this.timebox.Size = new System.Drawing.Size(73, 25);
-            this.timebox.TabIndex = 1;
-            // 
-            // mslabel
-            // 
-            this.mslabel.AutoSize = true;
-            this.mslabel.Location = new System.Drawing.Point(90, 30);
-            this.mslabel.Name = "mslabel";
-            this.mslabel.Size = new System.Drawing.Size(23, 15);
-            this.mslabel.TabIndex = 2;
-            this.mslabel.Text = "ms";
-            // 
             // frmSettings
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(556, 478);
-            this.Controls.Add(this.changetimegroupBox);
+            this.ClientSize = new System.Drawing.Size(556, 419);
+            this.Controls.Add(this.btnWaga);
             this.Controls.Add(this.grpIdlingQuantity);
             this.Controls.Add(this.btnAdvanced);
             this.Controls.Add(this.btnOK);
@@ -381,15 +352,13 @@ namespace IdleMaster
             this.MaximizeBox = false;
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Idle Master Settings";
+            this.Text = "ve";
             this.Load += new System.EventHandler(this.frmSettings_Load);
             this.grpGeneral.ResumeLayout(false);
             this.grpGeneral.PerformLayout();
             this.grpPriority.ResumeLayout(false);
             this.grpIdlingQuantity.ResumeLayout(false);
             this.grpIdlingQuantity.PerformLayout();
-            this.changetimegroupBox.ResumeLayout(false);
-            this.changetimegroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -415,9 +384,6 @@ namespace IdleMaster
     private ComboBox cboLanguage;
     private Label lblLanguage;
     private RadioButton radOneThenMany;
-        private GroupBox changetimegroupBox;
-        private TextBox timebox;
-        private Button changeautonextime;
-        private Label mslabel;
+        private Button btnWaga;
     }
 }

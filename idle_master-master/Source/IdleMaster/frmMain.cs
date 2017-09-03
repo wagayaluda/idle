@@ -38,7 +38,7 @@ namespace IdleMaster
         public int TimeLeft = 900;
         public int RetryCount = 0;
         public int ReloadCount = 0;
-        public int AutoNextTime = 500;
+        
         public int CardsRemaining { get { return CanIdleBadges.Sum(b => b.RemainingCard); } }
         public int GamesRemaining { get { return CanIdleBadges.Count(); } }
         public Badge CurrentBadge;
@@ -573,22 +573,6 @@ namespace IdleMaster
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            try
-            {
-                StringBuilder temp = new StringBuilder(500);
-                GetPrivateProfileString("AutoNext", "Time", "500", temp, 500, ".\\Settings.ini");
-                if (temp.ToString() == "")
-                { AutoNextTime = 500; }
-                else
-                {
-                    AutoNextTime = Convert.ToInt32(temp.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("程序发生错误，即将退出！\r\n错误信息：" + ex.Message);
-                System.Environment.Exit(0);
-            }
             // Copy external references to the output directory.  This allows ClickOnce install.
             if (File.Exists(Environment.CurrentDirectory + "\\steam_api.dll") == false)
             {
@@ -835,11 +819,31 @@ namespace IdleMaster
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            StopAutoNext();
             Close();
         }
 
         private async void tmrReadyToGo_Tick(object sender, EventArgs e)
         {
+            //以下是魔改代码
+            try
+            {
+                StringBuilder temp = new StringBuilder(500);
+                GetPrivateProfileString("AutoNext", "Time", "500", temp, 500, ".\\Settings.ini");
+                if (temp.ToString() == "")
+                { AutoNextTime = 500; }
+                else
+                {
+                    AutoNextTime = Convert.ToInt32(temp.ToString());
+                    tmrAutoNext.Interval = AutoNextTime;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("程序发生错误，即将退出！\r\n错误信息：" + ex.Message);
+                System.Environment.Exit(0);
+            }
+
             if (!IsCookieReady || !IsSteamReady)
                 return;
 
@@ -861,15 +865,9 @@ namespace IdleMaster
             await LoadBadgesAsync();
 
             StartIdle();
-            if (File.Exists(filepath) == true)
-            {
-                if (lblCurrentStatus.Text == localization.strings.idling_complete)
-                {
-                    File.Delete(filepath);
-                }
-                else
-                { autonextthr(); }
-            }
+            //以下是魔改代码
+            if (IsAutoNextOn == true)
+            { autonextthr(); }
         }
 
 
@@ -946,6 +944,7 @@ namespace IdleMaster
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            StopAutoNext();
             // Show the form
             String previous = Settings.Default.sort;
             Boolean previous_behavior = Settings.Default.OnlyOneGameIdle;
@@ -969,6 +968,7 @@ namespace IdleMaster
 
         private void pauseIdlingToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            StopAutoNext();
             btnPause.PerformClick();
         }
 
@@ -1077,67 +1077,78 @@ namespace IdleMaster
             statistics.checkCardRemaining((uint)CardsRemaining);
         }
 
-        private bool IsAutoNextComplete;
-        private bool IsAutoNextOn;
-        public string filepath = ".\\delete this file to stop";
+        //以下是魔改代码
+        public int AutoNextTime = 500;
+        private bool IsAutoNextOn=false;
+        private bool IsReloaded;
         private void autoNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            autonextthr();
+            if (IsAutoNextOn == false)
+            {
+                autonextlabel.Visible = true;
+                autoNextToolStripMenuItem.Text = "关闭自动下一个";
+                IsAutoNextOn = true;
+                IsReloaded = false;
+                autonextthr();
+            }
+            else
+            {
+                StopAutoNext();
+            }
+        }
+        private void StopAutoNext()
+        {
+            autonextlabel.Visible = false;
+            autoNextToolStripMenuItem.Text = "打开自动下一个";
+            IsAutoNextOn = false;
+        }
+        private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StopAutoNext();
+            ReloadList();
         }
         private void autonextthr()
         {
-            if (File.Exists(filepath) == false)
-            {
-                FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                fs.Close();
-            }
-            Thread thr = new Thread(new ParameterizedThreadStart(stopautonext));
-            thr.Start();
-            IsAutoNextComplete = false;
-            IsAutoNextOn = true;
-            AutoNext();
-            if (IsAutoNextComplete == true)
-            {
-                Application.Restart();
-                System.Environment.Exit(0);
-            }
+            tmrAutoNext.Enabled = true;
         }
-        private void stopautonext(object obj)
+        private void ReloadList()
         {
-            DialogResult dr = MessageBox.Show("点击确定停止", "提示");
-            IsAutoNextOn = false;
-            if (File.Exists(filepath) == true)
-            {
-                File.Delete(filepath);
-            }
-            return;
+            StopIdle();
+            AllBadges.Clear();
+            tmrReadyToGo.Enabled = true;
         }
-        private void AutoNext()
+        private void tmrAutoNext_Tick(object sender, EventArgs e)
         {
-            if (IsAutoNextComplete == false && IsAutoNextOn == true)
+            if (IsAutoNextOn == false)
             {
-                if (!IsSteamReady)
-                { return; }
-               else if(lblCurrentStatus.Text=="多线程")
+                tmrAutoNext.Enabled = false;
+                return;
+            }
+            if (CardsRemaining == 0)
+            {
+                tmrAutoNext.Enabled = false;
+                if (IsReloaded == false)
                 {
-                    IsAutoNextComplete = true;
-                    return;
-                }
-                else if (lblCurrentStatus.Text == localization.strings.idling_complete)
-                {
-                    IsAutoNextComplete = true;
-                    StopIdle();
-                    return;
+                    IsReloaded = true;
+                    ReloadList();
                 }
                 else
                 {
-                    StopIdle();
-                    AllBadges.RemoveAll(b => Equals(b, CurrentBadge));
-                    Thread.Sleep(AutoNextTime);
-                    StartIdle();
-                    AutoNext();
+                    IsAutoNextOn = false;
+                    MessageBox.Show("已完成挂卡！");
                 }
+                return;
             }
+            else
+            {
+                IsReloaded = false;
+                btnSkip.PerformClick();
+            }
+        }
+
+        private void autonextlabel_Click(object sender, EventArgs e)
+        {
+            StopAutoNext();
         }
     }
 }

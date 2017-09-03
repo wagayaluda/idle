@@ -163,44 +163,19 @@ namespace IdleMaster
             var frm = new frmSettingsAdvanced();
             frm.ShowDialog();
         }
-
-        private void changeautonextime_Click(object sender, EventArgs e)
+        //以下是魔改代码
+        private static frmWagaSettings newForm;
+        private void btnWaga_Click(object sender, EventArgs e)
         {
-            try
+            if (newForm == null || newForm.IsDisposed)
             {
-                if (timebox.Text == "")
-                {
-                    MessageBox.Show("请输入正确时间！");
-                }
-                else if (Convert.ToInt32(timebox.Text) > 5000)
-                {
-                    MessageBox.Show("设置间隔最大为5000ms！");
-                    timebox.Text = "5000";
-                }
-                else if (Convert.ToInt32(timebox.Text) < 500)
-                {
-                    MessageBox.Show("设置间隔最小为500ms！");
-                    timebox.Text = "500";
-                }
-                else
-                {
-                    try
-                    {
-                        WritePrivateProfileString("AutoNext", "Time", timebox.Text, ".\\Settings.ini");
-                        MessageBox.Show("设置已更改！即将重启程序。");
-                        Application.Restart();
-                        System.Environment.Exit(0);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("修改失败！");
-                    }
-                }
+                newForm = new frmWagaSettings();
+                newForm.Show();
             }
-            catch
+            else
             {
-                MessageBox.Show("请输入正确格式！");
-                timebox.Text = "";
+                newForm.WindowState = FormWindowState.Normal;
+                newForm.Activate();
             }
         }
     }

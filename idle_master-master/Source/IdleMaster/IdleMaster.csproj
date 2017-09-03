@@ -151,6 +151,12 @@
     <Compile Include="frmStatistics.Designer.cs">
       <DependentUpon>frmStatistics.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmWagaSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWagaSettings.Designer.cs">
+      <DependentUpon>frmWagaSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,6 +196,9 @@
     <EmbeddedResource Include="frmStatistics.resx">
       <DependentUpon>frmStatistics.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmWagaSettings.resx">
+      <DependentUpon>frmWagaSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="localization\strings.cs.resx" />
     <EmbeddedResource Include="localization\strings.de.resx" />
     <EmbeddedResource Include="localization\strings.el.resx" />
@@ -223,7 +232,6 @@
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="code signing.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -278,6 +286,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo1.ico" />
+    <None Include="Resources\neko.ico" />
     <None Include="Resources\bar-chart-2x.png" />
     <None Include="Resources\globe-2x.png" />
     <None Include="Resources\document-2x.png" />
