@@ -903,7 +903,22 @@ namespace IdleMaster
                 lblTimer.Text = TimeSpan.FromSeconds(TimeLeft).ToString(@"mm\:ss");
             }
         }
+        //private void btnSkip_Click(object sender, EventArgs e)
+        //{
+        //    if (!IsSteamReady)
+        //        return;
+
+        //    StopIdle();
+        //    AllBadges.RemoveAll(b => Equals(b, CurrentBadge));
+        //    StartIdle();
+        //}
+        
+        //以下为魔改代码
         private void btnSkip_Click(object sender, EventArgs e)
+        {
+            RunNextIdle();
+        }
+        private void RunNextIdle()
         {
             if (!IsSteamReady)
                 return;
@@ -912,6 +927,7 @@ namespace IdleMaster
             AllBadges.RemoveAll(b => Equals(b, CurrentBadge));
             StartIdle();
         }
+        //结束
         private void btnPause_Click(object sender, EventArgs e)
         {
             if (!IsSteamReady)
@@ -1008,6 +1024,7 @@ namespace IdleMaster
         {
             Show();
             WindowState = FormWindowState.Normal;
+            this.notifyIcon1.Visible = false;
         }
 
         private void lblCurrentRemaining_Click(object sender, EventArgs e)
@@ -1142,13 +1159,25 @@ namespace IdleMaster
             else
             {
                 IsReloaded = false;
-                btnSkip.PerformClick();
+                RunNextIdle();
             }
         }
 
         private void autonextlabel_Click(object sender, EventArgs e)
         {
             StopAutoNext();
+        }
+
+        private void frmMain_SizeChanged(object sender, EventArgs e)
+        {
+            if(Settings.Default.minToTray)
+            {
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+                    this.Hide();
+                    this.notifyIcon1.Visible = true;
+                }
+            }
         }
     }
 }
