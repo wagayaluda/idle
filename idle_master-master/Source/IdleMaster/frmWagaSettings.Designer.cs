@@ -97,7 +97,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 20);
             this.label1.TabIndex = 10;
-            this.label1.Text = "V1.1(9.3)";
+            this.label1.Text = "V1.2(9.5)";
             // 
             // frmWagaSettings
             // 
