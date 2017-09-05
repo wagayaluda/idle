@@ -218,10 +218,12 @@ namespace IdleMaster
                             var multi = CanIdleBadges.Where(b => b.HoursPlayed >= 2);
                             if (multi.Count() >= 1)
                             {
+                                PauseAutoNext(false);
                                 StartSoloIdle(multi.First());
                             }
                             else
                             {
+                                PauseAutoNext(true);
                                 StartMultipleIdle();
                             }
                         }
@@ -230,10 +232,12 @@ namespace IdleMaster
                             var multi = CanIdleBadges.Where(b => b.HoursPlayed < 2);
                             if (multi.Count() >= 2)
                             {
+                                PauseAutoNext(true);
                                 StartMultipleIdle();
                             }
                             else
                             {
+                                PauseAutoNext(false);
                                 StartSoloIdle(CanIdleBadges.First());
                             }
                         }
@@ -247,6 +251,23 @@ namespace IdleMaster
                 }
 
                 UpdateStateInfo();
+            }
+        }
+        //以下为魔改代码
+        private bool IsAutoNextPaused = false;
+        private void PauseAutoNext(bool b)
+        {
+            if (IsAutoNextOn && b && !IsAutoNextPaused)
+            {
+                IsAutoNextOn = false;
+                IsAutoNextPaused = true;
+                autonextlabel.Text = "暂停切换";
+            }
+            else if (!IsAutoNextOn && !b && IsAutoNextPaused)
+            {
+                tmrAutoNext.Enabled = true;
+                IsAutoNextPaused = false;
+                autonextlabel.Text = "关闭自动下一个";
             }
         }
 
@@ -1100,7 +1121,7 @@ namespace IdleMaster
         private bool IsReloaded;
         private void autoNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (IsAutoNextOn == false)
+            if (IsAutoNextOn == false && IsAutoNextPaused == false)
             {
                 autonextlabel.Visible = true;
                 autoNextToolStripMenuItem.Text = "关闭自动下一个";
@@ -1117,7 +1138,12 @@ namespace IdleMaster
         {
             autonextlabel.Visible = false;
             autoNextToolStripMenuItem.Text = "打开自动下一个";
+            autonextlabel.Text = "关闭自动下一个";
             IsAutoNextOn = false;
+            if (IsAutoNextPaused)
+            {
+                IsAutoNextPaused = false;
+            }
         }
         private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1136,7 +1162,7 @@ namespace IdleMaster
         }
         private void tmrAutoNext_Tick(object sender, EventArgs e)
         {
-            if (IsAutoNextOn == false)
+            if (IsAutoNextOn == false || IsAutoNextPaused == true)
             {
                 tmrAutoNext.Enabled = false;
                 return;
