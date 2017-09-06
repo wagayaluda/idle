@@ -287,16 +287,24 @@ namespace IdleMaster
             gameToolStripMenuItem.Enabled = true;
 
             // Update game image
-            try
+            //以下是魔改代码
+            if (IsImgEnabled)
             {
-                picApp.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + CurrentBadge.StringId + "/header_292x136.jpg");
+                try
+                {
+                    picApp.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + CurrentBadge.StringId + "/header_292x136.jpg");
+                    picApp.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Exception(ex, "frmMain -> StartIdle -> load pic, for id = " + CurrentBadge.AppId);
+                }
+            }
+            else
+            {
+                picApp.Image = Resources.NoImage;
                 picApp.Visible = true;
             }
-            catch (Exception ex)
-            {
-                Logger.Exception(ex, "frmMain -> StartIdle -> load pic, for id = " + CurrentBadge.AppId);
-            }
-
             // Update label controls
             lblCurrentRemaining.Text = CurrentBadge.RemainingCard + " " + localization.strings.card_drops_remaining;
             lblCurrentStatus.Text = "单线程";
@@ -1203,6 +1211,21 @@ namespace IdleMaster
                     this.Hide();
                     this.notifyIcon1.Visible = true;
                 }
+            }
+        }
+
+        public bool IsImgEnabled = false;
+        private void EnableImgToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (IsImgEnabled)
+            {
+                IsImgEnabled = false;
+                EnableImgToolStripMenuItem.Text = "打开图片显示";
+            }
+            else
+            {
+                IsImgEnabled = true;
+                EnableImgToolStripMenuItem.Text = "关闭图片显示";
             }
         }
     }

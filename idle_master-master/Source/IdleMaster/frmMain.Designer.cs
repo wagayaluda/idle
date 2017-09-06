@@ -90,6 +90,7 @@ namespace IdleMaster
             this.tmrStatistics = new System.Windows.Forms.Timer(this.components);
             this.tmrAutoNext = new System.Windows.Forms.Timer(this.components);
             this.autonextlabel = new System.Windows.Forms.Label();
+            this.EnableImgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTop.SuspendLayout();
             this.ssFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picReadingPage)).BeginInit();
@@ -236,6 +237,7 @@ namespace IdleMaster
             this.blacklistToolStripMenuItem,
             this.toolStripSeparator1,
             this.autoNextToolStripMenuItem,
+            this.EnableImgToolStripMenuItem,
             this.ReloadToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
@@ -606,6 +608,13 @@ namespace IdleMaster
             this.autonextlabel.Visible = false;
             this.autonextlabel.Click += new System.EventHandler(this.autonextlabel_Click);
             // 
+            // EnableImgToolStripMenuItem
+            // 
+            this.EnableImgToolStripMenuItem.Name = "EnableImgToolStripMenuItem";
+            this.EnableImgToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.EnableImgToolStripMenuItem.Text = "打开图片显示";
+            this.EnableImgToolStripMenuItem.Click += new System.EventHandler(this.EnableImgToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -719,6 +728,7 @@ namespace IdleMaster
         private Timer tmrAutoNext;
         private ToolStripSeparator toolStripSeparator1;
         private Label autonextlabel;
+        private ToolStripMenuItem EnableImgToolStripMenuItem;
     }
 }
 

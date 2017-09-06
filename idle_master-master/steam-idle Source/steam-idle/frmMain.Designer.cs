@@ -35,23 +35,25 @@
             // 
             // picApp
             // 
-            this.picApp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.picApp.Location = new System.Drawing.Point(-1, 0);
+            this.picApp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picApp.Image = global::steam_idle.Properties.Resources.NoImage;
+            this.picApp.Location = new System.Drawing.Point(0, 0);
+            this.picApp.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.picApp.Name = "picApp";
-            this.picApp.Size = new System.Drawing.Size(292, 136);
+            this.picApp.Size = new System.Drawing.Size(388, 157);
+            this.picApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picApp.TabIndex = 0;
             this.picApp.TabStop = false;
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(291, 136);
+            this.ClientSize = new System.Drawing.Size(388, 157);
             this.Controls.Add(this.picApp);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "You\'re Now In-Game";

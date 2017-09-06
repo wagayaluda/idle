@@ -34,7 +34,7 @@
             this.timebox = new System.Windows.Forms.TextBox();
             this.changeautonextime = new System.Windows.Forms.Button();
             this.aboutlabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.VersionLabel = new System.Windows.Forms.Label();
             this.changetimegroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,23 +88,23 @@
             this.aboutlabel.TabIndex = 9;
             this.aboutlabel.Text = "哇嘎吖噜哒 魔改制作";
             // 
-            // label1
+            // VersionLabel
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(445, 98);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 20);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "V1.2(9.5)";
+            this.VersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.VersionLabel.AutoSize = true;
+            this.VersionLabel.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.VersionLabel.Location = new System.Drawing.Point(445, 98);
+            this.VersionLabel.Name = "VersionLabel";
+            this.VersionLabel.Size = new System.Drawing.Size(99, 20);
+            this.VersionLabel.TabIndex = 10;
+            this.VersionLabel.Text = "V1.3(9.6)";
             // 
             // frmWagaSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(556, 127);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.aboutlabel);
             this.Controls.Add(this.changetimegroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -128,6 +128,6 @@
         private System.Windows.Forms.TextBox timebox;
         private System.Windows.Forms.Button changeautonextime;
         private System.Windows.Forms.Label aboutlabel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label VersionLabel;
     }
 }
