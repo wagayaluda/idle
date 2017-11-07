@@ -876,7 +876,6 @@ namespace IdleMaster
                 else
                 {
                     MinRuntime = Convert.ToInt32(temp.ToString());
-                    tmrAutoNext.Interval = MinRuntime;
                 }
             }
             catch (Exception ex)
