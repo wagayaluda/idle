@@ -178,5 +178,6 @@ namespace IdleMaster
                 newForm.Activate();
             }
         }
+
     }
 }

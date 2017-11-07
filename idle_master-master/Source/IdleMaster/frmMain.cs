@@ -105,15 +105,16 @@ namespace IdleMaster
                     return;
             }
         }
-
+        //以下是魔改代码
+        public int MinRuntime = 2;
         public void UpdateIdleProcesses()
         {
             foreach (var badge in CanIdleBadges.Where(b => !Equals(b, CurrentBadge)))
             {
-                if (badge.HoursPlayed >= 2 && badge.InIdle)
+                if (badge.HoursPlayed >= MinRuntime && badge.InIdle)
                     badge.StopIdle();
 
-                if (badge.HoursPlayed < 2 && CanIdleBadges.Count(b => b.InIdle) < 30)
+                if (badge.HoursPlayed < MinRuntime && CanIdleBadges.Count(b => b.InIdle) < 30)
                     badge.Idle();
             }
 
@@ -857,6 +858,7 @@ namespace IdleMaster
             //以下是魔改代码
             try
             {
+                //获取自动下一个间隔时间
                 StringBuilder temp = new StringBuilder(500);
                 GetPrivateProfileString("AutoNext", "Time", "500", temp, 500, ".\\Settings.ini");
                 if (temp.ToString() == "")
@@ -865,6 +867,16 @@ namespace IdleMaster
                 {
                     AutoNextTime = Convert.ToInt32(temp.ToString());
                     tmrAutoNext.Interval = AutoNextTime;
+                }
+                //获取最小运行时间
+                temp = new StringBuilder(500);
+                GetPrivateProfileString("MinRuntime", "Time", "2", temp, 500, ".\\Settings.ini");
+                if (temp.ToString() == "")
+                { MinRuntime = 2; }
+                else
+                {
+                    MinRuntime = Convert.ToInt32(temp.ToString());
+                    tmrAutoNext.Interval = MinRuntime;
                 }
             }
             catch (Exception ex)
