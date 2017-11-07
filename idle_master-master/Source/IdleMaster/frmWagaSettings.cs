@@ -119,7 +119,7 @@ namespace IdleMaster
                 }
                 //获取最小运行时间
                 temp = new StringBuilder(500);
-                GetPrivateProfileString("MinRuntime", "Time", "2", temp, 500, ".\\Settings.ini");
+                GetPrivateProfileString("AutoNext", "MinRuntime", "2", temp, 500, ".\\Settings.ini");
                 if (temp.ToString() == "")
                 {  }
                 else

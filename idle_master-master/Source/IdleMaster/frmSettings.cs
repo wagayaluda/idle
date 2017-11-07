@@ -4,6 +4,7 @@ using IdleMaster.Properties;
 using System.Threading;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace IdleMaster
 {
@@ -65,9 +66,35 @@ namespace IdleMaster
             Settings.Default.Save();
             Close();
         }
+        //以下为魔改代码
+        [DllImport("kernel32")]
+        private static extern int GetPrivateProfileString(string section, string key, string defVal, StringBuilder retVal, int size, string filePath);
+        private string MinRuntime_s;
+        private void LoadForm()
+        {
+            try
+            {
+                //获取最小运行时间
+                StringBuilder temp = new StringBuilder(500);
+                GetPrivateProfileString("AutoNext", "MinRuntime", "2", temp, 500, ".\\Settings.ini");
+                if (temp.ToString() == "")
+                { MinRuntime_s = "2"; }
+                else
+                {
+                    MinRuntime_s = temp.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("程序发生错误，即将退出！\r\n错误信息：" + ex.Message);
+                System.Environment.Exit(0);
+            }
+        }
+    
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
+            LoadForm();
             if (Settings.Default.language != "")
             {
                 cboLanguage.SelectedItem = Settings.Default.language;
@@ -118,10 +145,17 @@ namespace IdleMaster
             ttHints.SetToolTip(chkShowUsername, localization.strings.show_username);
             radOneGameOnly.Text = localization.strings.idle_individual;
             ttHints.SetToolTip(radOneGameOnly, localization.strings.idle_individual);
-            radManyThenOne.Text = localization.strings.idle_simultaneous;
-            ttHints.SetToolTip(radManyThenOne, localization.strings.idle_simultaneous);
-            radOneThenMany.Text = localization.strings.idle_onethenmany;
-            ttHints.SetToolTip(radOneThenMany, localization.strings.idle_onethenmany);
+
+            //以下为魔改代码
+            //radManyThenOne.Text = localization.strings.idle_simultaneous;
+            //ttHints.SetToolTip(radManyThenOne, localization.strings.idle_simultaneous);
+            //radOneThenMany.Text = localization.strings.idle_onethenmany;
+            //ttHints.SetToolTip(radOneThenMany, localization.strings.idle_onethenmany);
+            radManyThenOne.Text = localization.strings.idle_simultaneous.Replace("2", MinRuntime_s);
+            ttHints.SetToolTip(radManyThenOne, localization.strings.idle_simultaneous.Replace("2", MinRuntime_s));
+            radOneThenMany.Text = localization.strings.idle_onethenmany.Replace("2", MinRuntime_s);
+            ttHints.SetToolTip(radOneThenMany, localization.strings.idle_onethenmany.Replace("2", MinRuntime_s));
+
             radIdleDefault.Text = localization.strings.order_default;
             ttHints.SetToolTip(radIdleDefault, localization.strings.order_default);
             radIdleMostValue.Text = localization.strings.order_value;
