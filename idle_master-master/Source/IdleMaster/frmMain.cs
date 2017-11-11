@@ -216,7 +216,7 @@ namespace IdleMaster
                     {
                         if (Settings.Default.OneThenMany)
                         {
-                            var multi = CanIdleBadges.Where(b => b.HoursPlayed >= 2);
+                            var multi = CanIdleBadges.Where(b => b.HoursPlayed >= MinRuntime);
                             if (multi.Count() >= 1)
                             {
                                 PauseAutoNext(false);
@@ -230,7 +230,7 @@ namespace IdleMaster
                         }
                         else
                         {
-                            var multi = CanIdleBadges.Where(b => b.HoursPlayed < 2);
+                            var multi = CanIdleBadges.Where(b => b.HoursPlayed < MinRuntime);
                             if (multi.Count() >= 2)
                             {
                                 PauseAutoNext(true);
@@ -928,7 +928,7 @@ namespace IdleMaster
                     await LoadBadgesAsync();
                     UpdateIdleProcesses();
 
-                    isMultipleIdle = CanIdleBadges.Any(b => b.HoursPlayed < 2 && b.InIdle);
+                    isMultipleIdle = CanIdleBadges.Any(b => b.HoursPlayed < MinRuntime && b.InIdle);
                     if (isMultipleIdle)
                         TimeLeft = 360;
                 }
